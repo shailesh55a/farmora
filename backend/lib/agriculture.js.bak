@@ -1,0 +1,104 @@
+import fs from 'node:fs';
+
+const normalize = (value = '') => String(value).toLowerCase().trim();
+
+export const CROP_ALIASES = {
+  tomato: { en: ['tomato', 'tamatar'], hi: ['टमाटर'], mr: ['टोमॅटो'] },
+  onion: { en: ['onion', 'pyaj'], hi: ['प्याज'], mr: ['कांदा'] },
+  potato: { en: ['potato', 'alu'], hi: ['आलू'], mr: ['बटाटा'] },
+  wheat: { en: ['wheat', 'gehun'], hi: ['गेहूं', 'गेहूँ'], mr: ['गहू'] },
+  rice: { en: ['rice', 'paddy', 'dhan'], hi: ['चावल', 'धान'], mr: ['तांदूळ', 'धान'] },
+  cotton: { en: ['cotton', 'kapas'], hi: ['कपास'], mr: ['कापूस'] },
+  soybean: { en: ['soybean', 'soyabean', 'soya'], hi: ['सोयाबीन'], mr: ['सोयाबीन'] },
+  maize: { en: ['maize', 'corn', 'makka'], hi: ['मकई'], mr: ['मका'] },
+  chili: { en: ['chili', 'chilli', 'mirchi'], hi: ['मिर्च'], mr: ['मिरची'] },
+  groundnut: { en: ['groundnut', 'peanut', 'moongphali'], hi: ['मूंगफली'], mr: ['शेंगदाणे'] },
+  sugarcane: { en: ['sugarcane', 'ganna'], hi: ['गन्ना'], mr: ['ऊस'] },
+  gram: { en: ['gram', 'chana', 'chickpea'], hi: ['चना'], mr: ['चना'] },
+  jowar: { en: ['jowar', 'sorghum', 'jawar'], hi: ['ज्वार'], mr: ['ज्वारी'] },
+  bajra: { en: ['bajra', 'pearl millet', 'cumbu'], hi: ['बाजरा'], mr: ['बाजरी'] },
+  pigeonpea: { en: ['pigeonpea', 'tur', 'arhar'], hi: ['तूर', 'अरहर'], mr: ['तूर', 'अरहर'] },
+  mustard: { en: ['mustard', 'sarson', 'rai'], hi: ['सरसों', 'राई'], mr: ['मोहरी'] },
+  turmeric: { en: ['turmeric', 'haldi'], hi: ['हल्दी'], mr: ['हळद'] },
+  mango: { en: ['mango', 'aam'], hi: ['आम'], mr: ['आंबा'] },
+  banana: { en: ['banana', 'kela'], hi: ['केला'], mr: ['केळ'] },
+  grapes: { en: ['grapes', 'angoor'], hi: ['अंगूर'], mr: ['द्राक्ष'] },
+  pomegranate: { en: ['pomegranate', 'anar'], hi: ['अनार'], mr: ['डाळिंब'] },
+  orange: { en: ['orange', 'santra'], hi: ['संतरा'], mr: ['संत्रा'] },
+  guava: { en: ['guava', 'amrud'], hi: ['अमरूद'], mr: ['पेरू'] },
+  papaya: { en: ['papaya', 'papita'], hi: ['पपीता'], mr: ['पपई'] },
+  watermelon: { en: ['watermelon', 'tarbuj'], hi: ['तरबूज'], mr: ['तारबूज'] },
+  apple: { en: ['apple', 'seb'], hi: ['सेब'], mr: ['सफरचंद'] },
+};
+
+export const PROBLEM_ALIASES = {
+  pod_borer: { en: ['pod borer', 'pod_borer'], hi: ['फली बोरर'], mr: ['पॉड बॉरर'] },
+  early_blight: { en: ['early blight', 'early_blight'], hi: ['अर्ली ब्लाइट'], mr: ['प्रारंभिक ब्लाइट'] },
+  late_blight: { en: ['late blight', 'late_blight'], hi: ['लेट ब्लाइट'], mr: ['लेट ब्लाइट'] },
+  fruit_borer: { en: ['fruit borer', 'fruit_borer'], hi: ['फल बोरर'], mr: ['फळ बोरर'] },
+  shoot_fruit_borer: { en: ['shoot fruit borer', 'shoot_fruit_borer'], hi: ['शूट फ्रूट बॉरर'], mr: ['शूट फळ बोरर'] },
+  fall_armyworm: { en: ['fall armyworm', 'fall_armyworm'], hi: ['फॉल आर्मीवर्म'], mr: ['फॉल आर्मीवर्म'] },
+  stem_borer_leaf_folder: { en: ['stem borer', 'leaf folder', 'stem_borer_leaf_folder'], hi: ['स्टेम बॉरर', 'लीफ फोल्डर'], mr: ['स्टेम बॉरर', 'लीफ फोल्डर'] },
+  girdle_beetle: { en: ['girdle beetle', 'girdle_beetle'], hi: ['गिर्डल बीटल'], mr: ['गिर्डल बीटल'] },
+  aerial_blight: { en: ['aerial blight', 'aerial_blight'], hi: ['एरियल ब्लाइट'], mr: ['एरियल ब्लाइट'] },
+  blight: { en: ['blight'], hi: ['ब्लाइट'], mr: ['ब्लाइट'] },
+  aphid_jassid: { en: ['aphid', 'jassid', 'aphid_jassid'], hi: ['एफिड', 'जास्सिड'], mr: ['एफिड', 'जास्सिड'] },
+  whitefly: { en: ['whitefly'], hi: ['व्हाइटफ्लाय'], mr: ['व्हाइटफ्लाय'] },
+  leaf_spot: { en: ['leaf spot', 'leaf_spot'], hi: ['लीफ स्पॉट'], mr: ['लीफ स्पॉट'] },
+  rust: { en: ['rust'], hi: ['जंग'], mr: ['जंग'] },
+};
+
+const matchAliases = (text, aliases = []) => {
+  const haystack = normalize(text);
+  return aliases.some((alias) => haystack.includes(normalize(alias)));
+};
+
+export function detectCrop(text, fallback = '') {
+  if (!text) return fallback;
+  for (const [cropKey, aliases] of Object.entries(CROP_ALIASES)) {
+    const allAliases = [...(aliases.en || []), ...(aliases.hi || []), ...(aliases.mr || [])];
+    if (matchAliases(text, allAliases)) return cropKey;
+  }
+  return fallback;
+}
+
+export function detectProblem(text, fallback = '') {
+  if (!text) return fallback;
+  for (const [problemKey, aliases] of Object.entries(PROBLEM_ALIASES)) {
+    const allAliases = [...(aliases.en || []), ...(aliases.hi || []), ...(aliases.mr || [])];
+    if (matchAliases(text, allAliases)) return problemKey;
+  }
+  return fallback;
+}
+
+export function loadFertilizers() {
+  return JSON.parse(fs.readFileSync(new URL('../data/fertilizers.json', import.meta.url), 'utf8'));
+}
+
+export function loadTreatments() {
+  return JSON.parse(fs.readFileSync(new URL('../data/treatments.json', import.meta.url), 'utf8'));
+}
+
+export function findVerifiedProducts({ question = '', crop = '', category = '', disease = '' } = {}) {
+  const fertilizerIntent = /(fertilizer|fertiliser|उर्वरक|खत|नाइट्रोजन|फॉस्फेट|पोटाश|मिट्टी)/i.test(question)
+    || String(category || '').toLowerCase().includes('fertilizer');
+  const pesticideIntent = /(pesticide|fungicide|insecticide|spray|solution|दवा|कीटनाशक|फंगीसाइड|स्प्रे|रसायन)/i.test(question)
+    || String(category || '').toLowerCase().includes('pesticide');
+
+  const cropKey = detectCrop(question, crop || '');
+  const diseaseKey = detectProblem(question, disease || '');
+
+  if (fertilizerIntent && cropKey) {
+    return loadFertilizers().entries.filter((entry) => String(entry.crop || '').toLowerCase() === cropKey).slice(0, 5);
+  }
+
+  if ((pesticideIntent || diseaseKey) && cropKey) {
+    return loadTreatments().entries.filter((entry) => {
+      const matchesCrop = String(entry.crop || '').toLowerCase() === cropKey;
+      const matchesDisease = !diseaseKey || String(entry.disease || '').toLowerCase() === diseaseKey;
+      return matchesCrop && matchesDisease;
+    }).slice(0, 5);
+  }
+
+  return [];
+}

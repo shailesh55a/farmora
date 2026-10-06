@@ -1,0 +1,54 @@
+{
+  "version": "2025.01",
+  "sourcePolicy": "Verified product references in this file are meant for educational guidance only. Always cross-check against the official product label and local extension advice before use.",
+  "entries": [
+    {
+      "id": "tomato-early-blight-cymoxanil-mancozeb",
+      "crop": "tomato",
+      "disease": "early_blight",
+      "productName": "Cymoxanil 8% + Mancozeb 64% WP",
+      "productType": "fungicide",
+      "activeIngredient": "cymoxanil + mancozeb",
+      "purpose": "Protects tomato plants against early blight by reducing fungal spread on foliage.",
+      "applicationGuidance": "Apply as a foliar spray as per label instructions and local advisory. Reapply only according to the product label and extension recommendations.",
+      "safety": "Use protective gear, avoid drift, and keep away from water sources and bees. Read the label before use.",
+      "imageUrl": null,
+      "imageKind": "reference_illustration",
+      "brandName": null,
+      "source": "PPQS / ICAR guidance summaries",
+      "sourceUrl": "https://ppqs.gov.in"
+    },
+    {
+      "id": "tomato-late-blight-mancozeb",
+      "crop": "tomato",
+      "disease": "late_blight",
+      "productName": "Mancozeb 75% WP",
+      "productType": "fungicide",
+      "activeIngredient": "mancozeb",
+      "purpose": "Helps manage late blight on tomato foliage and stems.",
+      "applicationGuidance": "Use as a foliar spray following label directions and local crop stage guidance.",
+      "safety": "Do not enter treated fields before the safe re-entry interval specified on the label.",
+      "imageUrl": null,
+      "imageKind": "reference_illustration",
+      "brandName": null,
+      "source": "ICAR / TNAU crop protection references",
+      "sourceUrl": "https://www.icar.org.in"
+    },
+    {
+      "id": "cotton-bollworm-chlorantraniliprole",
+      "crop": "cotton",
+      "disease": "pod_borer",
+      "productName": "Chlorantraniliprole 18.5% SC",
+      "productType": "insecticide",
+      "activeIngredient": "chlorantraniliprole",
+      "purpose": "Targets bollworm and similar chewing pests in cotton.",
+      "applicationGuidance": "Apply as a foliar spray at the recommended crop stage and rate. Follow label instructions and local advisories.",
+      "safety": "Avoid spray drift, keep away from water bodies, and use protective clothing.",
+      "imageUrl": null,
+      "imageKind": "reference_illustration",
+      "brandName": null,
+      "source": "Central/State extension guidance summaries",
+      "sourceUrl": "https://agriwelfare.gov.in"
+    }
+  ]
+}

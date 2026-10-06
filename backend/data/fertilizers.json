@@ -1,0 +1,60 @@
+{
+  "version": "2025.01",
+  "sourcePolicy": "This fertilizer schedule is educational and limited to locally validated extension guidance. Always follow the current label and local agronomy advisory before applying any nutrient source.",
+  "entries": [
+    {
+      "id": "tomato-fert-2025",
+      "productName": "Tomato nutrient schedule (NPK as per local recommendation)",
+      "category": "fertilizer",
+      "crop": "tomato",
+      "growth_stage": "transplanting_to_fruiting",
+      "soil_context": "well-drained loam",
+      "fertilizer_type": "balanced_npk",
+      "N": 120,
+      "P": 60,
+      "K": 60,
+      "composition": "Urea + SSP or DAP + MOP, adjusted to soil test results",
+      "purpose": "Supports root establishment, flowering, and fruit set in tomato.",
+      "application": "Apply basal dose before planting and top-dress in split applications during vegetative and fruiting stages.",
+      "safety": "Do not exceed label rates and avoid applying on waterlogged soil.",
+      "source": "State agriculture university and ICAR nutrient recommendations",
+      "sourceUrl": "https://www.icar.org.in"
+    },
+    {
+      "id": "wheat-fert-2025",
+      "productName": "Wheat nutrient schedule (NPK as per local recommendation)",
+      "category": "fertilizer",
+      "crop": "wheat",
+      "growth_stage": "sowing_to_grain_filling",
+      "soil_context": "alluvial soil",
+      "fertilizer_type": "nitrogen_based",
+      "N": 100,
+      "P": 60,
+      "K": 40,
+      "composition": "Urea, DAP, MOP tuned for soil test values",
+      "purpose": "Improves tillering, grain filling, and yield in wheat.",
+      "application": "Apply basal at sowing and split nitrogen top-dress at tillering and booting stages.",
+      "safety": "Follow local soil test recommendations and avoid heavy irrigation immediately after application.",
+      "source": "State agriculture university recommendations",
+      "sourceUrl": "https://agriwelfare.gov.in"
+    },
+    {
+      "id": "rice-fert-2025",
+      "productName": "Rice nutrient schedule (NPK as per local recommendation)",
+      "category": "fertilizer",
+      "crop": "rice",
+      "growth_stage": "transplanting_to_panicle_initiation",
+      "soil_context": "lowland rice field",
+      "fertilizer_type": "split_nitrogen",
+      "N": 120,
+      "P": 50,
+      "K": 50,
+      "composition": "Urea with basal phosphate and potash, plus split N top dressing",
+      "purpose": "Supports early growth, panicle development, and healthy grain filling.",
+      "application": "Apply basal before transplanting and split N at transplanting, tillering, and panicle initiation.",
+      "safety": "Avoid over-application in flooded fields without soil test advice.",
+      "source": "State agriculture department crop schedules",
+      "sourceUrl": "https://agriwelfare.gov.in"
+    }
+  ]
+}
